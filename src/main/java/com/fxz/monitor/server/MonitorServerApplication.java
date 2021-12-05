@@ -1,14 +1,11 @@
 package com.fxz.monitor.server;
 
 import com.fxz.fuled.service.annotation.EnableFuledBoot;
-import com.fxz.fuled.simple.cache.EnableSimpleCache;
 import com.fxz.monitor.server.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author fxz
@@ -26,6 +23,6 @@ public class MonitorServerApplication implements ApplicationRunner {
     }
 
     public void run(ApplicationArguments args) throws Exception {
-        testService.getInfo();
+
     }
 }
