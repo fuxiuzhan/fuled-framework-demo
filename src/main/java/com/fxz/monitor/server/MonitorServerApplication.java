@@ -7,6 +7,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author fxz
  */
@@ -23,6 +26,10 @@ public class MonitorServerApplication implements ApplicationRunner {
     }
 
     public void run(ApplicationArguments args) throws Exception {
-
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                System.out.println("info->" + testService.getInfo());
+            }
+        }, 0, 1, TimeUnit.SECONDS);
     }
 }
