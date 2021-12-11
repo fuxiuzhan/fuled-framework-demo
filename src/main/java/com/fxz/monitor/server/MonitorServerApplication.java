@@ -25,6 +25,7 @@ public class MonitorServerApplication implements ApplicationRunner {
     TestProperty testProperty;
 
     public static void main(String[] args) {
+        System.getProperties().put("spring.application.name","monitor");
         SpringApplication.run(MonitorServerApplication.class, args);
     }
 
