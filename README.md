@@ -5,4 +5,4 @@
 
  - nacos：http://prd.nacos.fuled.xyz:8848/nacos/
  - nacos：fuled/fuxiuzhan
- - nuxes:http://nexus.fuled.xyz:8081/repository/maven_2rd/
+ - nuxes:http://nexus.fuled.xyz:8081/repository/maven_2nd/
