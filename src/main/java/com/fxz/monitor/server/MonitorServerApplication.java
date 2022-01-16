@@ -10,7 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,7 +26,7 @@ public class MonitorServerApplication implements ApplicationRunner, EnvironmentA
     @Autowired
     TestService testService;
     @Autowired
-   TestProperty testProperty;
+    TestProperty testProperty;
 
     Environment context;
 
@@ -39,13 +41,16 @@ public class MonitorServerApplication implements ApplicationRunner, EnvironmentA
             @Override
             public void run() {
                 System.out.println("info->" + testService.getInfo());
-                System.out.println("ptoperty->" + testProperty.toString());
+                System.out.println("properties->" + testProperty.toString());
             }
         }, 0, 1, TimeUnit.SECONDS);
+        Thread.currentThread().getContextClassLoader().loadClass("java.util.concurrent.ThreadPoolExecutor");
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 1, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10));
+        threadPoolExecutor.execute(() -> System.out.println("test"));
     }
 
     @Override
     public void setEnvironment(Environment environment) {
-        this.context=environment;
+        this.context = environment;
     }
 }
