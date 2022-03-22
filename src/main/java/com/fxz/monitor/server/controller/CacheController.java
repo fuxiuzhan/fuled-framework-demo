@@ -23,7 +23,8 @@ public class CacheController {
 
     @GetMapping("/test")
     @Caching(cacheable = {@Cacheable(value = "s", key = "#id", cacheManager = "cacheMgr")
-            , @Cacheable(value = "m", key = "#id", cacheManager = "cacheMgr")}
+            , @Cacheable(value = "m", key = "#id", cacheManager = "cacheMgr")
+            , @Cacheable(value="test.cache")}
             , evict = {@CacheEvict(value = "s", key = "#id")})
     public String testCache(String id) {
         return System.currentTimeMillis() + "";
