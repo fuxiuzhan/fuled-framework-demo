@@ -27,18 +27,14 @@ public class MonitorServerApplication implements ApplicationRunner {
     TestProperty testProperty;
 
     public static void main(String[] args) {
-        System.getProperties().put("spring.application.name","monitor");
         SpringApplication.run(MonitorServerApplication.class, args);
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("info->" + testService.getInfo());
-                System.out.println("properties->" + testProperty.toString());
-            }
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
+            System.out.println("info->" + testService.getInfo());
+            System.out.println("properties->" + testProperty.toString());
         }, 0, 1, TimeUnit.SECONDS);
     }
 }

@@ -1,2 +1,0 @@
-org.springframework.boot.SpringApplicationRunListener=\
-  com.fxz.monitor.server.listener.AppRunListener
