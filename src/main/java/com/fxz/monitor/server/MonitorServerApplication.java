@@ -37,7 +37,7 @@ public class MonitorServerApplication implements ApplicationRunner {
             @Override
             public void run() {
                 System.out.println("info->" + testService.getInfo());
-                System.out.println("ptoperty->" + testProperty.toString());
+                System.out.println("properties->" + testProperty.toString());
             }
         }, 0, 1, TimeUnit.SECONDS);
     }
