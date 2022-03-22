@@ -16,6 +16,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,27 +29,20 @@ import java.util.Map;
 public class CacheConfig extends CachingConfigurerSupport {
     private Duration timeToLive = Duration.ofMinutes(30);
 
-    public void setTimeToLive(Duration timeToLive) {
-        this.timeToLive = timeToLive;
-    }
-
-    @Bean("apiMgr")
+    @Bean("cacheMgr")
     public CacheManager cacheManager(RedisConnectionFactory factory) {
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        //解决查询缓存转换异常的问题
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
-
-        // 针对不同cacheName，设置不同的过期时间
         Map<String, RedisCacheConfiguration> initialCacheConfiguration = new HashMap<String, RedisCacheConfiguration>() {{
-            put("h", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1))); //1小时
-            put("m", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10))); // 10分钟
+            put("s", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(1)));
+            put("m", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10)));
             // ...
         }};
-        // 配置序列化（解决乱码的问题）
+
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(timeToLive)
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
@@ -62,6 +56,11 @@ public class CacheConfig extends CachingConfigurerSupport {
 
     @Override
     public KeyGenerator keyGenerator() {
-        return (target, method, params) -> target.getClass().getName() + ":" + method.getName() + ":" + params.length + ":" + Arrays.deepHashCode(params);
+        return new KeyGenerator() {
+            @Override
+            public Object generate(Object target, Method method, Object... params) {
+                return target.getClass().getName() + ":" + method.getName() + ":" + params.length + ":" + Arrays.deepHashCode(params);
+            }
+        };
     }
 }
