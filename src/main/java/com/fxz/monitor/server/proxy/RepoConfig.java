@@ -17,4 +17,11 @@ public class RepoConfig {
                 (proxy, method, args) -> new RepoPojo("二狗", 24));
         return o;
     }
+
+    @Bean
+    IRepo2 injectRepo2() {
+        IRepo2 o = (IRepo2) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{IRepo2.class},
+                (proxy, method, args) -> "repo2");
+        return o;
+    }
 }

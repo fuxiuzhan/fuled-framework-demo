@@ -27,6 +27,8 @@ public class MonitorServerApplication implements ApplicationRunner {
     TestProperty testProperty;
 
     public static void main(String[] args) {
+//        Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{IRepo.class},
+//                (proxy, method, argss) -> new RepoPojo("二狗", 24));
         SpringApplication.run(MonitorServerApplication.class, args);
     }
 

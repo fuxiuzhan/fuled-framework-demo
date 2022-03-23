@@ -2,6 +2,7 @@ package com.fxz.monitor.server.controller;
 
 
 import com.fxz.monitor.server.proxy.IRepo;
+import com.fxz.monitor.server.proxy.IRepo2;
 import com.fxz.monitor.server.proxy.RepoPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,10 +22,13 @@ public class CacheController {
     @Autowired
     IRepo repo;
 
+    @Autowired
+    IRepo2 repo2;
+
     @GetMapping("/test")
     @Caching(cacheable = {@Cacheable(value = "s", key = "#id", cacheManager = "cacheMgr")
             , @Cacheable(value = "m", key = "#id", cacheManager = "cacheMgr")
-            , @Cacheable(value="test.cache")}
+            , @Cacheable(value = "test.cache")}
             , evict = {@CacheEvict(value = "s", key = "#id")})
     public String testCache(String id) {
         return System.currentTimeMillis() + "";
@@ -32,7 +36,12 @@ public class CacheController {
 
     @GetMapping("/repo")
     public RepoPojo getRepo() {
-        return repo.findById("111");
+        return repo.findById("test");
+    }
+
+    @GetMapping("/repo2")
+    public String getRepo2() {
+        return repo2.findById("test");
     }
 
     @GetMapping("/del")
