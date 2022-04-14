@@ -45,7 +45,7 @@ public class CacheController {
     }
 
     @GetMapping("/del")
-    @CacheEvict(value = "s", key = "#id", allEntries = true)
+    @CacheEvict(value = "s", key = "#id",allEntries = true)
     public String del(String id) {
         return "del";
     }

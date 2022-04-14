@@ -6,9 +6,14 @@ import com.fxz.fuled.config.starter.model.ConfigChangeEvent;
 import com.fxz.fuled.logger.starter.annotation.Monitor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.stereotype.Service;
+
+import java.util.Properties;
 
 /**
  * @author fxz
@@ -20,11 +25,18 @@ public class TestService implements EnvironmentAware {
     @Value("${test.value:abc}")
     private String value;
 
+    private String inner;
+
     private Environment environment;
+
+    public TestService(@Value("${test.value:inner}") String inner) {
+        this.inner = inner;
+    }
+
     //    @Cache
     @Monitor
     public String getInfo() {
-        return value;
+        return value + ":" + inner;
     }
 
 
@@ -37,6 +49,13 @@ public class TestService implements EnvironmentAware {
 
     @Override
     public void setEnvironment(Environment environment) {
-        this.environment=environment;
+        this.environment = environment;
+    }
+
+
+    @Bean
+    @RefreshScope
+    public PropertiesPropertySource testBean() {
+        return new PropertiesPropertySource("11111", new Properties());
     }
 }

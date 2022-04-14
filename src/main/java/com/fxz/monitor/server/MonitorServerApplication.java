@@ -1,13 +1,18 @@
 package com.fxz.monitor.server;
 
 import com.fxz.fuled.service.annotation.EnableFuledBoot;
+import com.fxz.monitor.server.feign.DnsServerApi;
 import com.fxz.monitor.server.service.TestProperty;
 import com.fxz.monitor.server.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ApplicationContext;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -18,13 +23,28 @@ import java.util.concurrent.TimeUnit;
 
 @EnableCaching
 @EnableFuledBoot
+@EnableFeignClients
 public class MonitorServerApplication implements ApplicationRunner {
 
+    String v1;
+
+    @Value("${test.v1:v1}")
+    public void setV1(String v1) {
+        this.v1 = v1;
+    }
+
+    @Autowired
+    ApplicationContext applicationContext;
 
     @Autowired
     TestService testService;
     @Autowired
     TestProperty testProperty;
+    @Autowired
+    LoadBalancerClient loadBalancer;
+
+    @Autowired
+    DnsServerApi dnsServerApi;
 
     public static void main(String[] args) {
 //        Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{IRepo.class},
@@ -37,6 +57,14 @@ public class MonitorServerApplication implements ApplicationRunner {
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             System.out.println("info->" + testService.getInfo());
             System.out.println("properties->" + testProperty.toString());
+            System.out.println("v1->" + v1);
+            try {
+                System.out.println("dns->" + dnsServerApi.query("www.fuled.xyz.", "A"));
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+//            loadBalancer.choose("dns-server");
+//            loadBalancer.choose("monitor");
         }, 0, 1, TimeUnit.SECONDS);
     }
 }
