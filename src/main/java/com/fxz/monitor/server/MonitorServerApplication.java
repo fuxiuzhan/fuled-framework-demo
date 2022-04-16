@@ -26,13 +26,6 @@ import java.util.concurrent.TimeUnit;
 @EnableFeignClients
 public class MonitorServerApplication implements ApplicationRunner {
 
-    String v1;
-
-    @Value("${test.v1:v1}")
-    public void setV1(String v1) {
-        this.v1 = v1;
-    }
-
     @Autowired
     ApplicationContext applicationContext;
 
@@ -46,9 +39,10 @@ public class MonitorServerApplication implements ApplicationRunner {
     @Autowired
     DnsServerApi dnsServerApi;
 
+    @Value("${test.myKey:default}")
+    private String testMyKey;
+
     public static void main(String[] args) {
-//        Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{IRepo.class},
-//                (proxy, method, argss) -> new RepoPojo("二狗", 24));
         SpringApplication.run(MonitorServerApplication.class, args);
     }
 
@@ -57,7 +51,8 @@ public class MonitorServerApplication implements ApplicationRunner {
         Executors.newScheduledThreadPool(1).scheduleAtFixedRate(() -> {
             System.out.println("info->" + testService.getInfo());
             System.out.println("properties->" + testProperty.toString());
-            System.out.println("v1->" + v1);
+            System.out.println("testMyKey->" + testMyKey);
+
             try {
                 System.out.println("dns->" + dnsServerApi.query("www.fuled.xyz.", "A"));
             } catch (Exception e) {

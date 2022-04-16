@@ -1,2 +1,8 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.fxz.monitor.server.test.BeanProcessor
+  com.fxz.monitor.server.env.EnvPostProcessor
+
+org.springframework.context.ApplicationContextInitializer=\
+  com.fxz.monitor.server.env.AppContextInitializer
+
+org.springframework.boot.SpringApplicationRunListener=\
+  com.fxz.monitor.server.env.SpringAppRunListener

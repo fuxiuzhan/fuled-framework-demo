@@ -34,16 +34,17 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.nepxion</groupId>
+            <artifactId>discovery-common-apollo</artifactId>
+            <version>6.10.0</version>
+        </dependency>
+
         <!--        <dependency>-->
-        <!--            <groupId>com.nepxion</groupId>-->
-        <!--            <artifactId>discovery-common-apollo</artifactId>-->
-        <!--            <version>6.10.0</version>-->
+        <!--            <groupId>com.alibaba.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
         <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
-<!--        </dependency>-->
     </dependencies>
     <repositories>
         <repository>

@@ -5,8 +5,11 @@ import com.fxz.fuled.config.starter.annotation.DimaondConfigChangeListener;
 import com.fxz.fuled.config.starter.model.ConfigChangeEvent;
 import com.fxz.fuled.logger.starter.annotation.Monitor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.endpoint.event.RefreshEvent;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -29,6 +32,9 @@ public class TestService implements EnvironmentAware {
 
     private Environment environment;
 
+    @Autowired
+    ConfigurableApplicationContext context;
+
     public TestService(@Value("${test.value:inner}") String inner) {
         this.inner = inner;
     }
@@ -44,6 +50,8 @@ public class TestService implements EnvironmentAware {
     public void configListener(ConfigChangeEvent event) {
         event.changedKeys().forEach(k -> {
             log.info("config changes namespace->{},key->{},value->{}", event.getNamespace(), k, event.getChange(k));
+            //触发refreshEvent
+            context.publishEvent(new RefreshEvent(this, k, "pub"));
         });
     }
 
