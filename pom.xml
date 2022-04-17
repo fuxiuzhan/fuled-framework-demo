@@ -34,11 +34,16 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.nepxion</groupId>
-            <artifactId>discovery-common-apollo</artifactId>
-            <version>6.10.0</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.nepxion</groupId>-->
+        <!--            <artifactId>discovery-common-apollo</artifactId>-->
+        <!--            <version>6.10.0</version>-->
+        <!--        </dependency>-->
 
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba.cloud</groupId>-->
