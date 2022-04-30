@@ -2,7 +2,7 @@ package com.fxz.monitor.server;
 
 import com.fxz.fuled.service.annotation.EnableFuledBoot;
 import com.fxz.monitor.server.feign.DnsServerApi;
-import com.fxz.monitor.server.orm.repository.base.UserRepository;
+import com.fxz.monitor.server.orm.repository.UserRepository;
 import com.fxz.monitor.server.service.TestProperty;
 import com.fxz.monitor.server.service.TestService;
 import lombok.extern.slf4j.Slf4j;
