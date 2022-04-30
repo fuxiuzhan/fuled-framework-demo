@@ -1,7 +1,6 @@
 package com.fxz.monitor.server.service;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Component;
  */
 @ConfigurationProperties("test")
 @Component
-@RefreshScope
+//@RefreshScope
 public class TestProperty {
 
     private String name;

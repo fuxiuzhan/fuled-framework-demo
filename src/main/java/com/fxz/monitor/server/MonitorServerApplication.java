@@ -2,8 +2,11 @@ package com.fxz.monitor.server;
 
 import com.fxz.fuled.service.annotation.EnableFuledBoot;
 import com.fxz.monitor.server.feign.DnsServerApi;
+import com.fxz.monitor.server.orm.repository.base.UserRepository;
 import com.fxz.monitor.server.service.TestProperty;
 import com.fxz.monitor.server.service.TestService;
+import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -24,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 @EnableCaching
 @EnableFuledBoot
 @EnableFeignClients
+@Slf4j
+@MapperScan(basePackages = "com.fxz.monitor.server.orm")
 public class MonitorServerApplication implements ApplicationRunner {
 
     @Autowired
@@ -42,6 +47,9 @@ public class MonitorServerApplication implements ApplicationRunner {
     @Value("${test.myKey:default}")
     private String testMyKey;
 
+    @Autowired
+    UserRepository userRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(MonitorServerApplication.class, args);
     }
@@ -52,7 +60,6 @@ public class MonitorServerApplication implements ApplicationRunner {
             System.out.println("info->" + testService.getInfo());
             System.out.println("properties->" + testProperty.toString());
             System.out.println("testMyKey->" + testMyKey);
-
             try {
                 System.out.println("dns->" + dnsServerApi.query("www.fuled.xyz.", "A"));
             } catch (Exception e) {
