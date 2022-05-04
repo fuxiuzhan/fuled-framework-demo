@@ -20,7 +20,7 @@ public interface UserRepository extends BaseRepository<UserInfo> {
     UserInfo findById(@Param("id") Long id);
 
     /**
-     * mybatis 不支持方法名相同但参数或者返回值不同的方法，因为mapperStatmentId=className+methodName
+     * mybatis 不支持方法名相同但参数或者返回值不同的方法，因为mapperStatementId=className+methodName
      *
      * @param id
      * @param deleted
