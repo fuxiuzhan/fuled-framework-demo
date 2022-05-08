@@ -1,5 +1,6 @@
 package com.fxz.monitor.server.orm.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fxz.monitor.server.orm.entity.base.BaseEntity;
 import lombok.Data;
@@ -18,12 +19,11 @@ import lombok.Data;
 public class UserInfo extends BaseEntity {
 
     /**
-     * table:
      * CREATE TABLE
      * user_info
      * (
      * id INT(10) unsigned NOT NULL AUTO_INCREMENT,
-     * name VARCHAR(24) NOT NULL,
+     * user_name VARCHAR(24) NOT NULL,
      * age INT NOT NULL,
      * addr VARCHAR(256),
      * phone VARCHAR(20),
@@ -37,7 +37,10 @@ public class UserInfo extends BaseEntity {
      * )
      * ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
      */
+    @TableField("user_name")
     private String userName;
+    @TableField("user_name")
+    private String username;
     private Integer age;
     private String addr;
     private String phone;

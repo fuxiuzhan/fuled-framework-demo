@@ -16,6 +16,8 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ApplicationContextEvent;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 @EnableFeignClients
 @Slf4j
 @MapperScan(basePackages = "com.fxz.monitor.server.orm")
-public class MonitorServerApplication implements ApplicationRunner {
+public class MonitorServerApplication implements ApplicationRunner, ApplicationListener<ApplicationContextEvent> {
 
     @Autowired
     ApplicationContext applicationContext;
@@ -61,13 +63,19 @@ public class MonitorServerApplication implements ApplicationRunner {
             System.out.println("properties->" + testProperty.toString());
             System.out.println("testMyKey->" + testMyKey);
             try {
-                userRepository.findById(1L);
+                userRepository.selectById(1);
                 System.out.println("dns->" + dnsServerApi.query("www.fuled.xyz.", "A"));
+//                applicationContext.publishEvent(new RefreshEvent(applicationContext, "", ""));
             } catch (Exception e) {
                 System.out.println(e);
             }
 //            loadBalancer.choose("dns-server");
 //            loadBalancer.choose("monitor");
         }, 0, 1, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationContextEvent event) {
+        System.out.println("-------------------------------->" + event.getClass().getSimpleName());
     }
 }
