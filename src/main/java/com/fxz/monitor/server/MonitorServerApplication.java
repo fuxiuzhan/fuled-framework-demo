@@ -61,6 +61,7 @@ public class MonitorServerApplication implements ApplicationRunner {
             System.out.println("properties->" + testProperty.toString());
             System.out.println("testMyKey->" + testMyKey);
             try {
+                userRepository.findById(1L);
                 System.out.println("dns->" + dnsServerApi.query("www.fuled.xyz.", "A"));
             } catch (Exception e) {
                 System.out.println(e);

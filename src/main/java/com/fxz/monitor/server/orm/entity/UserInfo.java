@@ -37,7 +37,7 @@ public class UserInfo extends BaseEntity {
      * )
      * ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
      */
-    private String name;
+    private String userName;
     private Integer age;
     private String addr;
     private String phone;

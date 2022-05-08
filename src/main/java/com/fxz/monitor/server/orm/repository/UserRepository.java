@@ -16,7 +16,7 @@ public interface UserRepository extends BaseRepository<UserInfo> {
      * @param id
      * @return
      */
-    @Select("select name,age,addr from user_info where id=#{id}")
+    @Select("select user_name,age,addr from user_info where id=#{id}")
     UserInfo findById(@Param("id") Long id);
 
     /**
