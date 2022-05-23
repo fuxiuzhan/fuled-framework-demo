@@ -1,5 +1,6 @@
 package com.fxz.monitor.server.feign;
 
+import com.fxz.component.fuled.cat.starter.component.feign.CatFeignInterceptor;
 import com.netflix.loadbalancer.IRule;
 import feign.Client;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -22,5 +23,12 @@ public class Config {
     @Bean
     public IRule buildIRule() {
         return new CustRule();
+    }
+
+    @Bean
+    @ConditionalOnClass(CatFeignInterceptor.class)
+    public CatFeignInterceptor catFeignInterceptor() {
+        CatFeignInterceptor catFeignInterceptor = new CatFeignInterceptor();
+        return catFeignInterceptor;
     }
 }

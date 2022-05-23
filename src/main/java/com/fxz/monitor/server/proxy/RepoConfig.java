@@ -2,6 +2,7 @@ package com.fxz.monitor.server.proxy;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import java.lang.reflect.Proxy;
 
@@ -12,6 +13,7 @@ import java.lang.reflect.Proxy;
 public class RepoConfig {
 
     @Bean
+    @Primary
     IRepo injectRepo() {
         IRepo o = (IRepo) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{IRepo.class},
                 (proxy, method, args) -> new RepoPojo("二狗", 24));

@@ -1,5 +1,6 @@
 package com.fxz.monitor.server.env;
 
+import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
+@Service(version = "1.0.0")
 public class AppAware implements ApplicationContextAware {
     private static final String propertyName = "appAware-properties";
 
