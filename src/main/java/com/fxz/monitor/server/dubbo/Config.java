@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -41,6 +42,9 @@ public class Config {
         //serviceServiceConfig.setParameters(parameters);
 //        AsyncContext
         //7.导出
+        Map<String,String> paramsMap=new HashMap<>();
+        paramsMap.put("test","values");
+        serviceServiceConfig.setParameters(paramsMap);
         serviceServiceConfig.export();
     }
 
@@ -55,6 +59,9 @@ public class Config {
         referenceConfig.setGeneric(true);
         referenceConfig.setTimeout(1000);
         referenceConfig.setCheck(false);
+        Map<String,String> paramsMap=new HashMap<>();
+        paramsMap.put("test","values");
+        referenceConfig.setParameters(paramsMap);
         GenericService genericService = referenceConfig.get();
         return id -> {
             Map<String, Object> map = (Map<String, Object>) genericService.$invoke("findById", new String[]{String.class.getName()}, new Object[]{"test"});
