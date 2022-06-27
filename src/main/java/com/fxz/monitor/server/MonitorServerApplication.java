@@ -1,6 +1,7 @@
 package com.fxz.monitor.server;
 
 import com.fxz.fuled.service.annotation.EnableFuledBoot;
+import com.fxz.fuled.threadpool.monitor.pojo.ThreadPoolProperties;
 import com.fxz.monitor.server.feign.DnsServerApi;
 import com.fxz.monitor.server.orm.repository.UserRepository;
 import com.fxz.monitor.server.service.TestProperty;
@@ -17,6 +18,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.event.ApplicationContextEvent;
 
 import java.util.concurrent.Executors;

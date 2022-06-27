@@ -28,15 +28,16 @@ public class TestService implements EnvironmentAware {
     @Value("${test.value:abc}")
     private String value;
 
-    private String inner;
+    private static String inner;
 
     private Environment environment;
 
     @Autowired
     ConfigurableApplicationContext context;
 
-    public TestService(@Value("${test.value:inner}") String inner) {
-        this.inner = inner;
+    @Value("${test.value:inner}")
+    public void innerSet(String innert) {
+        inner = innert;
     }
 
     //    @Cache
