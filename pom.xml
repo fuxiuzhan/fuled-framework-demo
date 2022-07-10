@@ -44,7 +44,11 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.0</version>
         </dependency>
-
+        <dependency>
+            <artifactId>fuled-dynamic-datasource-starter</artifactId>
+            <groupId>com.fxz.component</groupId>
+            <version>1.1.0.WaterDrop</version>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

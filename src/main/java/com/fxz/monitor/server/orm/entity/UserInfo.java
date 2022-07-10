@@ -2,6 +2,7 @@ package com.fxz.monitor.server.orm.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fxz.fuled.dynamic.datasource.starter.encrypt.EncryptColumn;
 import com.fxz.monitor.server.orm.entity.base.BaseEntity;
 import lombok.Data;
 
@@ -43,7 +44,7 @@ public class UserInfo extends BaseEntity {
     private String username;
     private Integer age;
     private String addr;
-    private String phone;
+    private EncryptColumn phone;
     /**
      * for testing  mybatisplus 字段要规范，不然可能导致推断错误
      * 如 aaa 字段在BaseMapper.selectById 方法中的解析如下，字段错误直接报错
