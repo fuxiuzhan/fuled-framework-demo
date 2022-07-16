@@ -1,6 +1,7 @@
 package com.fxz.monitor.server;
 
 import com.fxz.fuled.service.annotation.EnableFuledBoot;
+import com.fxz.fuled.swagger.starter.annotation.EnableSwagger;
 import com.fxz.monitor.server.feign.DnsServerApi;
 import com.fxz.monitor.server.orm.repository.UserRepository;
 import com.fxz.monitor.server.service.TestProperty;
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 @EnableFeignClients
 @Slf4j
 @MapperScan(basePackages = "com.fxz.monitor.server.orm")
+@EnableSwagger
 public class MonitorServerApplication implements ApplicationRunner, ApplicationListener<ApplicationContextEvent> {
 
     @Autowired
