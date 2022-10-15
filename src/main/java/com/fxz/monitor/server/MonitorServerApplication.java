@@ -1,6 +1,7 @@
 package com.fxz.monitor.server;
 
 import com.fxz.fuled.service.annotation.EnableFuledBoot;
+import com.fxz.monitor.server.dubbo.IProcessor;
 import com.fxz.monitor.server.feign.DnsServerApi;
 import com.fxz.monitor.server.feign.DnsServerApi2;
 import com.fxz.monitor.server.orm.repository.UserRepository;
@@ -8,6 +9,7 @@ import com.fxz.monitor.server.proxy.IRepo;
 import com.fxz.monitor.server.service.TestProperty;
 import com.fxz.monitor.server.service.TestService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.BeansException;
@@ -63,6 +65,9 @@ public class MonitorServerApplication implements ApplicationRunner, ApplicationL
     @Qualifier("dubboIRepo")
     IRepo iRepo;
 
+    @DubboReference(check = false)
+    IProcessor iProcessor;
+
     public static void main(String[] args) {
         SpringApplication.run(MonitorServerApplication.class, args);
     }
@@ -74,7 +79,8 @@ public class MonitorServerApplication implements ApplicationRunner, ApplicationL
             System.out.println("properties->" + testProperty.toString());
             System.out.println("testMyKey->" + testMyKey);
             try {
-                userRepository.selectById(1);
+//                userRepository.findById(1L,1L);
+                iProcessor.process("name");
                 System.out.println("repo->" + iRepo.findById("test"));
                 System.out.println("dns->" + dnsServerApi.query("www.fuled.xyz.", "A"));
 //                System.out.println("dns->" + dnsServerApi2.query("www.fuled.xyz.", "A"));

@@ -1,5 +1,6 @@
 package com.fxz.monitor.server.orm.repository;
 
+import com.fxz.fuled.simple.cache.Cache;
 import com.fxz.monitor.server.orm.entity.UserInfo;
 import com.fxz.monitor.server.orm.repository.base.BaseRepository;
 import org.apache.ibatis.annotations.Param;
@@ -8,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 /**
  * @author fxz
  */
+//@DS("master")
 public interface UserRepository extends BaseRepository<UserInfo> {
 
     /**
@@ -16,8 +18,9 @@ public interface UserRepository extends BaseRepository<UserInfo> {
      * @param id
      * @return
      */
-    @Select("select name,age,addr from user_info where id=#{id}")
-    UserInfo findById(@Param("id") Long id);
+//    @Cache(key = "#id")
+    @Select("select user_name,age,addr from user_info where id=#{id}")
+    UserInfo findById(Long id,Long id2);
 
     /**
      * mybatis 不支持方法名相同但参数或者返回值不同的方法，因为mapperStatementId=className+methodName
