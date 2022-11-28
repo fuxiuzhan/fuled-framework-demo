@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
  * @author fxz
  */
 @ConfigurationProperties("test")
-@Component
-@RefreshScope
 public class TestProperty {
 
     private String name;

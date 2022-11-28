@@ -3,10 +3,11 @@ package com.fxz.monitor.server.env;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.PropertiesPropertySource;
+import org.springframework.core.env.MapPropertySource;
 import org.springframework.stereotype.Component;
 
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author fxz
@@ -17,9 +18,9 @@ public class EnvPostProcessor implements EnvironmentPostProcessor {
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        Properties properties = new Properties();
-        PropertiesPropertySource propertiesPropertySource = new PropertiesPropertySource(propertyName, properties);
-        properties.put("test.myKey", "envPostProcessor-properties");
-        environment.getPropertySources().addFirst(propertiesPropertySource);
+        Map hashMap = new HashMap();
+        MapPropertySource mapPropertySource = new MapPropertySource(propertyName, hashMap);
+        hashMap.put("test.myKey", "envPostProcessor-properties");
+        environment.getPropertySources().addFirst(mapPropertySource);
     }
 }

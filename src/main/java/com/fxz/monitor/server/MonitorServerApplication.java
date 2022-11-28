@@ -1,7 +1,6 @@
 package com.fxz.monitor.server;
 
 import com.fxz.fuled.service.annotation.EnableFuledBoot;
-import com.fxz.monitor.server.feign.DnsServerApi;
 import com.fxz.monitor.server.service.TestProperty;
 import com.fxz.monitor.server.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 
@@ -24,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 @EnableCaching
 @EnableFuledBoot
 @EnableFeignClients
+@EnableConfigurationProperties(TestProperty.class)
 public class MonitorServerApplication implements ApplicationRunner {
 
     @Autowired
@@ -33,11 +33,6 @@ public class MonitorServerApplication implements ApplicationRunner {
     TestService testService;
     @Autowired
     TestProperty testProperty;
-    @Autowired
-    LoadBalancerClient loadBalancer;
-
-    @Autowired
-    DnsServerApi dnsServerApi;
 
     @Value("${test.myKey:default}")
     private String testMyKey;
@@ -52,14 +47,6 @@ public class MonitorServerApplication implements ApplicationRunner {
             System.out.println("info->" + testService.getInfo());
             System.out.println("properties->" + testProperty.toString());
             System.out.println("testMyKey->" + testMyKey);
-
-            try {
-                System.out.println("dns->" + dnsServerApi.query("www.fuled.xyz.", "A"));
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-//            loadBalancer.choose("dns-server");
-//            loadBalancer.choose("monitor");
         }, 0, 1, TimeUnit.SECONDS);
     }
 }

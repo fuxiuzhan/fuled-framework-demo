@@ -3,9 +3,10 @@ package com.fxz.monitor.server.env;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.PropertiesPropertySource;
+import org.springframework.core.env.MapPropertySource;
 
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author fxz
@@ -25,9 +26,9 @@ public class SpringAppRunListener implements SpringApplicationRunListener {
 
     @Override
     public void contextPrepared(ConfigurableApplicationContext context) {
-        Properties properties = new Properties();
-        PropertiesPropertySource propertiesPropertySource = new PropertiesPropertySource(propertyName, properties);
-        properties.put("test.myKey", "springAppRunListener-properties");
-        context.getEnvironment().getPropertySources().addFirst(propertiesPropertySource);
+        Map hashMap = new HashMap();
+        MapPropertySource mapPropertySource = new MapPropertySource(propertyName, hashMap);
+        hashMap.put("test.myKey", "springAppRunListener-properties");
+        context.getEnvironment().getPropertySources().addFirst(mapPropertySource);
     }
 }
