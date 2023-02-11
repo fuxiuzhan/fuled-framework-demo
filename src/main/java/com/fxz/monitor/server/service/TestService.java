@@ -4,6 +4,8 @@ package com.fxz.monitor.server.service;
 import com.fxz.fuled.config.starter.annotation.DimaondConfigChangeListener;
 import com.fxz.fuled.config.starter.model.ConfigChangeEvent;
 import com.fxz.fuled.logger.starter.annotation.Monitor;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +43,8 @@ public class TestService implements EnvironmentAware {
 
     //    @Cache
     @Monitor
+    @Counted(value = "info.cnt", extraTags = {"tagB", "B"},description = "info cnt")
+    @Timed(value = "info.get", extraTags = {"tagA", "A"}, description = "server-getinfo", percentiles = {0.99, 0.95, 0.90})
     public String getInfo() {
         return value + ":" + inner;
     }

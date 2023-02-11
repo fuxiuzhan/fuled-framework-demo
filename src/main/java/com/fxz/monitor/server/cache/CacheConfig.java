@@ -16,7 +16,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -56,11 +55,6 @@ public class CacheConfig extends CachingConfigurerSupport {
 
     @Override
     public KeyGenerator keyGenerator() {
-        return new KeyGenerator() {
-            @Override
-            public Object generate(Object target, Method method, Object... params) {
-                return target.getClass().getName() + ":" + method.getName() + ":" + params.length + ":" + Arrays.deepHashCode(params);
-            }
-        };
+        return (target, method, params) -> target.getClass().getName() + ":" + method.getName() + ":" + params.length + ":" + Arrays.deepHashCode(params);
     }
 }
