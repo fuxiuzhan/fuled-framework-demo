@@ -5,10 +5,12 @@ import com.fxz.monitor.server.orm.entity.UserInfo;
 import com.fxz.monitor.server.orm.repository.base.BaseRepository;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author fxz
  */
+@Repository
 //@DS("master")
 public interface UserRepository extends BaseRepository<UserInfo> {
 

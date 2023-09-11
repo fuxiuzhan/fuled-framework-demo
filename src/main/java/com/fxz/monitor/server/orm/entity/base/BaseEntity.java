@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author fxz
@@ -17,7 +18,7 @@ public class BaseEntity {
     private Long id;
     private Integer deleted = 0;
     private String creator;
-    private LocalDateTime createTime;
+    private Date createTime;
     private String updater;
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }
